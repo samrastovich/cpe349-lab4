@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ChangeMaker {
    public static int[] change_DP(int n, int[] d) {
       int[] A = new int[n];
@@ -8,7 +10,7 @@ public class ChangeMaker {
          if (j == 0)
             C[j] = 0;
          else if (j > 0) 
-            C[j] = 1 + min(C, j, d);
+            C[j] = 1 + min(C, j, d, A);
          
       } 
       for (int i = 0; i < A.length; i++) {
@@ -18,12 +20,14 @@ public class ChangeMaker {
       return res;
    }
 
-   private static int min(int[] C, int j, int[] d, in[] A) {
+   private static int min(int[] C, int j, int[] d, int[] A) {
       int res = -99999;
       int minCoin = 0;
       
       for (int i = 0; i < d.length; i++) {
-         int tmp = C[j - d[i]];
+         int tmp = 0;
+         if (j - d[i] > 0)
+            tmp = C[j - d[i]];
          if (tmp < res) { 
             res = tmp; 
             minCoin = i;
@@ -32,7 +36,7 @@ public class ChangeMaker {
       A[j] = minCoin;                        
       return res;
    }
-   public static void main(String[] args) [
+   public static void main(String[] args) {
       Scanner in = new Scanner(System.in);
       System.out.println("Input number of coins:");
       int k = in.nextInt();
@@ -60,7 +64,7 @@ public class ChangeMaker {
          for (int i = 0; i < arr.length; i++) {
             sum += arr[i];
          }
-         System.out.print(sum);
+         System.out.println(sum);
          System.out.println("Input amount for which to make change");
          n = in.nextInt();
       }
