@@ -19,20 +19,12 @@ public class ChangeMaker {
       while (counter > 0) {
          res[A[counter]]++;
          counter -= d[A[counter]];
-         /*res[A[i]]++;
-         if (A[i] != prev && prev != -1) {
-            res[prev] -= counter;
-            counter = 0;
-         }
-         counter++;
-         prev = A[i];
-         prevCoin = d[A[i]];*/
       }
-      System.out.println("A:");
+      /*System.out.println("A:");
       printArray(A);
 
       System.out.println("C:");
-      printArray(C);
+      printArray(C);*/
 
       return res;
    }
@@ -69,32 +61,38 @@ public class ChangeMaker {
       Scanner in = new Scanner(System.in);
       System.out.println("Input number of coins:");
       int k = in.nextInt();
+      int count = 0;
 
       int[] d = new int[k];
-      System.out.println("Enter list of coins separated by spaces");
+      System.out.println("Enter list of coins separated by spaces: ");
       for (int i = 0; i < k; i++) {
          d[i] = in.nextInt();
       }
-      System.out.println("Input amount for which to make change");
+      System.out.print("Input amount for which to make change: ");
       
       int n = in.nextInt();
       while (n > 0) {
          int[] arr = change_DP(n, d);
-         System.out.println("DP algorithm results");
+         System.out.println("\nDP algorithm results\n");
          System.out.println("Amount: " + n);
-         System.out.println("Optimal distribution: ");
+         System.out.print("Optimal distribution: ");
          for (int i = 0; i < arr.length; i++) {
-            if (i > 0) 
-               System.out.print(" + ");
-            System.out.print(arr[i] + "*" + d[i] + "c");
+            if (arr[i] > 0) {
+               if (count > 0) {
+                  System.out.print(" + ");
+               }
+               System.out.print(arr[i] + "*" + d[i] + "c");
+               count++;
+            }
          }
+         count = 0;
          System.out.println();
-         System.out.println("Optimal coin count: ");
+         System.out.print("Optimal coin count: ");
          int sum = 0;
          for (int i = 0; i < arr.length; i++) {
             sum += arr[i];
          }
-         System.out.println(sum);
+         System.out.println(sum + "\n");
          System.out.println("Input amount for which to make change");
          n = in.nextInt();
       }
