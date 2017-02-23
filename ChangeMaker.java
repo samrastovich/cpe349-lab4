@@ -2,39 +2,68 @@ import java.util.Scanner;
 
 public class ChangeMaker {
    public static int[] change_DP(int n, int[] d) {
-      int[] A = new int[n];
-      int[] C = new int[n];
+      int[] A = new int[n + 1];
+      int[] C = new int[n + 1];
       int[] res = new int[d.length];
- 
-      for (int j = 0; j < C.length; j++) {
-         if (j == 0)
-            C[j] = 0;
-         else if (j > 0) 
-            C[j] = 1 + min(C, j, d, A);
-         
-      } 
-      for (int i = 0; i < A.length; i++) {
-         res[A[i]]++;
+      int counter = n;
+
+      for (int i = 0; i < res.length; i++) {
+         res[i] = 0;
       }
+
+      C[0] = 0;
+ 
+      for (int j = 1; j < C.length; j++) {
+         C[j] = 1 + min(C, j, d, A);
+      } 
+      while (counter > 0) {
+         res[A[counter]]++;
+         counter -= d[A[counter]];
+         /*res[A[i]]++;
+         if (A[i] != prev && prev != -1) {
+            res[prev] -= counter;
+            counter = 0;
+         }
+         counter++;
+         prev = A[i];
+         prevCoin = d[A[i]];*/
+      }
+      System.out.println("A:");
+      printArray(A);
+
+      System.out.println("C:");
+      printArray(C);
 
       return res;
    }
 
+   private static void printArray(int[] arr) {
+      for (int i = 0; i < arr.length; i++) {
+         System.out.print(arr[i] + " ");
+      }
+      System.out.println();
+   }
+
    private static int min(int[] C, int j, int[] d, int[] A) {
-      int res = -99999;
-      int minCoin = 0;
+      int curMin = 99999;
+      int tmp, minCoin = 0;
       
       for (int i = 0; i < d.length; i++) {
-         int tmp = 0;
-         if (j - d[i] > 0)
+         if (j - d[i] > 0) {
             tmp = C[j - d[i]];
-         if (tmp < res) { 
-            res = tmp; 
+            if (tmp < curMin) { 
+               curMin = tmp; 
+               minCoin = i;
+            }
+         }
+         else if (j - d[i] == 0) {
+            curMin = C[j - d[i]];
             minCoin = i;
+            break;
          }
       }   
       A[j] = minCoin;                        
-      return res;
+      return curMin;
    }
    public static void main(String[] args) {
       Scanner in = new Scanner(System.in);
@@ -57,8 +86,9 @@ public class ChangeMaker {
          for (int i = 0; i < arr.length; i++) {
             if (i > 0) 
                System.out.print(" + ");
-            System.out.println(arr[i] + "*" + d[i] + "c");
+            System.out.print(arr[i] + "*" + d[i] + "c");
          }
+         System.out.println();
          System.out.println("Optimal coin count: ");
          int sum = 0;
          for (int i = 0; i < arr.length; i++) {
