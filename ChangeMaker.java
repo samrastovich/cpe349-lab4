@@ -1,6 +1,44 @@
 import java.util.Scanner;
 
 public class ChangeMaker {
+
+
+   public static int[] change_greedy(int n, int[] d) {
+      int[] res = new int[d.length];
+      int curCoinIndex = -1, curCoinFit = 0, curCoinSum = 0;
+      int exit = 0;
+
+      while (n > 0) {
+         for (int i = 0; i < d.length; i++) {
+            if (d[i] <= n) {
+               curCoinIndex = i;
+               break;
+            }
+         }
+         do {
+            if (!(curCoinSum + d[curCoinIndex] > n)) {
+               curCoinSum += d[curCoinIndex];
+               curCoinFit++;
+            }
+            else {
+               exit = 1;
+            }
+         }
+         while (exit != 1);
+
+         res[curCoinIndex] = curCoinFit;
+
+         n -= curCoinFit * d[curCoinIndex];
+
+         curCoinIndex = -1;
+         curCoinFit = 0;
+         curCoinSum = 0;
+         exit = 0;
+      }
+      return res;
+   }
+
+
    public static int[] change_DP(int n, int[] d) {
       int[] A = new int[n + 1];
       int[] C = new int[n + 1];
@@ -57,6 +95,7 @@ public class ChangeMaker {
       A[j] = minCoin;                        
       return curMin;
    }
+
    public static void main(String[] args) {
       Scanner in = new Scanner(System.in);
       System.out.println("Input number of coins:");
@@ -72,27 +111,57 @@ public class ChangeMaker {
       
       int n = in.nextInt();
       while (n > 0) {
-         int[] arr = change_DP(n, d);
+         int[] dynamicRes = change_DP(n, d);
+         int[] greedyRes = change_greedy(n, d);
+
          System.out.println("\nDP algorithm results\n");
          System.out.println("Amount: " + n);
          System.out.print("Optimal distribution: ");
-         for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > 0) {
+
+         for (int i = 0; i < dynamicRes.length; i++) {
+            if (dynamicRes[i] > 0) {
                if (count > 0) {
                   System.out.print(" + ");
                }
-               System.out.print(arr[i] + "*" + d[i] + "c");
+               System.out.print(dynamicRes[i] + "*" + d[i] + "c");
                count++;
             }
          }
+
          count = 0;
          System.out.println();
          System.out.print("Optimal coin count: ");
+
          int sum = 0;
-         for (int i = 0; i < arr.length; i++) {
-            sum += arr[i];
+         for (int i = 0; i < dynamicRes.length; i++) {
+            sum += dynamicRes[i];
          }
          System.out.println(sum + "\n");
+
+         System.out.println("\nGreedy algorithm results\n");
+         System.out.println("Amount: " + n);
+         System.out.print("Optimal distribution: ");
+
+         for (int i = 0; i < greedyRes.length; i++) {
+            if (greedyRes[i] > 0) {
+               if (count > 0) {
+                  System.out.print(" + ");
+               }
+               System.out.print(greedyRes[i] + "*" + d[i] + "c");
+               count++;
+            }
+         }
+
+         count = 0;
+         System.out.println();
+         System.out.print("Optimal coin count: ");
+
+         sum = 0;
+         for (int i = 0; i < greedyRes.length; i++) {
+            sum += greedyRes[i];
+         }
+         System.out.println(sum + "\n");
+
          System.out.println("Input amount for which to make change");
          n = in.nextInt();
       }
