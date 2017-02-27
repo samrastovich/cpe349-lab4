@@ -1,3 +1,8 @@
+/* Authors: Matt Bryan and Sam Rastovich
+ * IDs: mpbryan & srastovi
+ * Date: 2/24
+ * Assignment: Project 4 */
+
 import java.util.Scanner;
 
 public class ChangeMaker {
@@ -58,12 +63,6 @@ public class ChangeMaker {
          res[A[counter]]++;
          counter -= d[A[counter]];
       }
-      /*System.out.println("A:");
-      printArray(A);
-
-      System.out.println("C:");
-      printArray(C);*/
-
       return res;
    }
 
@@ -107,7 +106,7 @@ public class ChangeMaker {
       for (int i = 0; i < k; i++) {
          d[i] = in.nextInt();
       }
-      System.out.print("Input amount for which to make change: ");
+      System.out.print("Input amount for which to make change (Enter 0 to quit): ");
       
       int n = in.nextInt();
       while (n > 0) {
@@ -162,7 +161,7 @@ public class ChangeMaker {
          }
          System.out.println(sum + "\n");
 
-         System.out.println("Input amount for which to make change");
+         System.out.print("Input amount for which to make change (Enter 0 to quit): ");
          n = in.nextInt();
       }
    }

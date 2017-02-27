@@ -1,3 +1,8 @@
+/* Authors: Matt Bryan and Sam Rastovich
+ * IDs: mpbryan & srastovi
+ * Date: 2/24
+ * Assignment: Project 4 */
+
 public class Tester {
    public static void main(String args[]) {
       int[] set1 = {100, 50, 25, 10, 5, 1};
@@ -15,7 +20,7 @@ public class Tester {
       for (int[] curSet : sets) {
 
          System.out.print("Testing set" + setCount++ + ": ");
-         for (int i = 0; i < 200; i++) {
+         for (int i = 1; i <= 200; i++) {
             //set tests
             resDP = ChangeMaker.change_DP(i, curSet);
             resGreedy = ChangeMaker.change_greedy(i, curSet);
