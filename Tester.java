@@ -35,12 +35,12 @@ public class Tester {
             if (countDP == countGreedy) {
                matchCount++;
             }
+
+         	countDP = 0;
+         	countGreedy = 0;
          }
          System.out.println(matchCount + " matches in 200 tests");
-         matchCount = 0;
-         countDP = 0;
-         countGreedy = 0;
+   		matchCount = 0;
       }
-
    }
 }

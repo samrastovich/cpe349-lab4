@@ -21,7 +21,7 @@ public class ChangeMaker {
             }
          }
          do {
-            if (!(curCoinSum + d[curCoinIndex] > n)) {
+            if (curCoinSum + d[curCoinIndex] <= n) {
                curCoinSum += d[curCoinIndex];
                curCoinFit++;
             }
